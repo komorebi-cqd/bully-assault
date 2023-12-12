@@ -1,12 +1,11 @@
-import Button from '@mui/material/Button';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import routes from './router';
+
+const router = createBrowserRouter(routes)
+
 const App = () => {
   return (
-    <div >
-      <Button variant="contained">Hello world</Button>
-      <div className="w-12 h-12 bg-black">
-        header
-      </div>
-    </div>
+    <RouterProvider router={router} fallbackElement={<p>加载中......</p>} />
   )
 }
 
