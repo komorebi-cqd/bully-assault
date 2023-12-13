@@ -1,8 +1,8 @@
 
-import Home from "../pages/Home";
-import Marketplace from "../pages/Marketplace";
-import Layout from '../components/ui/Layout';
-import NotFount from "../pages/404";
+import Home from "@/pages/Home";
+import Marketplace from "@/pages/Marketplace";
+import Layout from '@/components/ui/Layout';
+import NotFount from "@/pages/404";
 
 const routes = [
     {

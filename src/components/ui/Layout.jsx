@@ -1,6 +1,7 @@
-import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Footer from "./Footer";
+import { Outlet,ScrollRestoration  } from 'react-router-dom';
+
+import Header from './header';
+import Footer from "./footer";
 
 
 function Layout() {
@@ -9,6 +10,7 @@ function Layout() {
             <div className="min-h-screen">
                 <div className="mx-auto lg:px-0">
                     <Header />
+                    <ScrollRestoration />
                     <main className='max-w-screen-lg m-auto px-5 pt-32'>
                         <Outlet />
                     </main>
@@ -18,5 +20,4 @@ function Layout() {
         </div>
     )
 }
-
 export default Layout;
