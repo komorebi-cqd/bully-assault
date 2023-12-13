@@ -11,7 +11,7 @@ export default function Header() {
   console.log(location);
   const [top, setTop] = useState(true);
 
-  const [openWellet, setOpenWellet] = useState(true);
+  const [openWellet, setOpenWellet] = useState(false);
 
   const handleConnectWalletDia = () => {
     setOpenWellet(true);
