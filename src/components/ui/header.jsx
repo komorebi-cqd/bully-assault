@@ -1,25 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Button } from '@mui/material'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/avater.png'
 import { useLocation } from "react-router-dom";
-import ConnectWalletDia from './ConnectWalletDia';
-// import MobileMenu from './mobile-menu'
+import useWallet from '@/hooks/useWallet';
+import ConnectWalletBlock from './ConnectWalletBlock';
+
 
 export default function Header() {
+  const { connectToStarknet, isConnected } = useWallet();
   const location = useLocation();
-  console.log(location);
   const [top, setTop] = useState(true);
-
-  const [openWellet, setOpenWellet] = useState(false);
-
-  const handleConnectWalletDia = () => {
-    setOpenWellet(true);
-  };
-
-  const cloneConnectWalletDia = () => {
-    setOpenWellet(false);
-  }
 
   // detect whether user has scrolled the page down by 10px
   const scrollHandler = () => {
@@ -27,6 +17,7 @@ export default function Header() {
   }
 
   useEffect(() => {
+    connectToStarknet("neverAsk");
     scrollHandler()
     window.addEventListener('scroll', scrollHandler)
     return () => window.removeEventListener('scroll', scrollHandler)
@@ -52,16 +43,16 @@ export default function Header() {
                 <Link to="/marketplace" className={`flex items-center py-3 font-medium text-gray-600 hover:text-gray-900  transition duration-150 ease-in-out relative after:absolute after:h-[2px] after:transition-all after:bottom-0 hover:after:bg-primary hover:after:left-0 hover:after:right-0 ${location?.pathname === "/marketplace" ? "after:left-0 after:right-0 after:bg-primary text-gray-900 " : "after:left-1/2 after:right-1/2"}`}>Marketplace</Link>
               </li>
               <li>
-                <Button variant="contained" onClick={() => handleConnectWalletDia()}>
-                  连接钱包
-                </Button>
+                {!isConnected && (<button className=' text-sm transition-all bg-[#f3f4f6] hover:bg-[#e5e7eb] px-4 py-2 rounded' onClick={() => connectToStarknet()}>
+                  Wallet connect
+                </button>)}
+                {isConnected && (<ConnectWalletBlock />)}
               </li>
             </ul>
           </nav>
           {/* <MobileMenu /> */}
         </div>
       </div>
-      <ConnectWalletDia open={openWellet} onClose={cloneConnectWalletDia}/>
     </header>
   )
 }
