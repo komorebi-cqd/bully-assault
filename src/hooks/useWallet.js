@@ -10,6 +10,8 @@ const useWallet = create((set) => ({
     isConnected: false, //是否连接
     account: "", //连接账号
     selectedAddress: "",
+    provider: null,
+    connection: null,
     connectToStarknet: async (mode = "alwaysAsk") => {
         const res = await connect({
             modalMode: mode,
@@ -25,14 +27,18 @@ const useWallet = create((set) => ({
         });
         console.log(res);
         set({
+            connection: res,
             isConnected: res?.isConnected || false,
             account: res?.account,
-            selectedAddress: res?.selectedAddress || ''
+            selectedAddress: res?.selectedAddress || '',
+            provider: res.provider
         })
     },
     disconnecting: async () => {
         await disconnect();
         set({
+            connection: null,
+            provider: null,
             isConnected: false,
             account: "",
             selectedAddress: "",
