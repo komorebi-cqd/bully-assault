@@ -1,6 +1,6 @@
+import { create } from "zustand";
 import { connect, disconnect } from 'starknetkit';
 import { InjectedConnector } from "starknetkit/injected"
-import { create } from "zustand";
 
 
 const useWallet = create((set) => ({

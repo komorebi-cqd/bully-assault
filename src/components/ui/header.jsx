@@ -4,10 +4,12 @@ import Logo from '../../assets/avater.png'
 import { useLocation } from "react-router-dom";
 import useWallet from '@/hooks/useWallet';
 import ConnectWalletBlock from './ConnectWalletBlock';
+import useMetaMask from '../../hooks/useMetaMask';
 
 
 export default function Header() {
   const { connectToStarknet, isConnected } = useWallet();
+  const { connectMetaMask } = useMetaMask();
   const location = useLocation();
   const [top, setTop] = useState(true);
 
@@ -47,6 +49,9 @@ export default function Header() {
                   Wallet connect
                 </button>)}
                 {isConnected && (<ConnectWalletBlock />)}
+              </li>
+              <li>
+                <div className='cursor-pointer ' onClick={() => connectMetaMask()}>连接小狐狸</div>
               </li>
             </ul>
           </nav>
