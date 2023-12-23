@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form"
+import FullButton from "@/components/Buttons/FullButton"
+import InputN from "@/components/inputs/InputN";
 
 
 const Mint = () => {
-
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -15,24 +18,31 @@ const Mint = () => {
     })
 
     const onSubmit = (data) => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
         console.log(data, errors)
     }
     return (
-        <>
-            <div className="flex justify-center w-[80%] mx-auto h-12 gap-x-5">
-                <div className="w-[200px] text-right leading-[3rem]">Tick:</div>
-                <div className="flex-shrink-0">
-                    <input maxLength={6} placeholder="4-6 characters"  className={`w-[300px] h-full px-4 transition bg-white border-2  rounded-lg outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors['tick'] ? 'border-rose-400' : 'border-[rgba(138,138,160,0.3)]'}`}  {...register("tick", { required: true })} />
-                </div>
+        <div className="flex flex-col gap-y-5">
+            <InputN id='tick' label='Tick' disabled={loading} register={register} errors={errors} required />
+            <InputN id='repeatMint' label='RepeatMint' disabled={loading} register={register} errors={errors} required />
+            <div className="flex flex-col items-center justify-between mt-5 md:flex-row">
+                <div className="mb-4 md:mb-0">钱包地址余额：xxxx ETH</div>
+                <FullButton onClick={handleSubmit(onSubmit)} sx={{
+                    borderRadius: "25px",
+                    padding: "12px 40px",
+                    fontSize: "1rem",
+                    bgcolor: " rgba(12, 175, 96, 1)",
+                    "&:hover": {
+                        bgcolor: " rgba(12, 175, 96, 1)",
+                    }
+                }} variant="text" >
+                    <span className='text-white'>Mint </span>
+                </FullButton>
             </div>
-            <div className="flex justify-center w-[80%] mx-auto h-12 gap-x-5">
-                <div className="w-[200px] text-right leading-[3rem]">repeatMint:</div>
-                <div className="flex-shrink-0">
-                    <input placeholder="please enter" className={`w-[300px] h-full px-4 transition bg-white border-2 rounded-lg outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors['repeatMint'] ? 'border-rose-400' : 'border-[rgba(138,138,160,0.3)]'}`} {...register("repeatMint", { required: true })} />
-                </div>
-            </div>
-             <div className="w-[520px] h-12 flex justify-center items-center rounded-3xl mx-auto cursor-pointer bg-[rgba(81,66,252,.1)] text-primary text-base" onClick={handleSubmit(onSubmit)}>Mint</div>
-        </>
+        </div>
     )
 }
 

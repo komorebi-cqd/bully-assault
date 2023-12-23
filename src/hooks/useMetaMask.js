@@ -13,7 +13,8 @@ const useMetaMask = create((set, get) => ({
             })
             const chainId = await ethereum.request({
                 method: 'eth_chainId'
-            })
+            });
+            set({account: accounts[0], chainId})
             console.log(web3,accounts,chainId);
         } else {
             console.log("没安装小狐狸");

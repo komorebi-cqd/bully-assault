@@ -2,11 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-
+    --nav-height: 100px;
 }
 
 body {
   margin: 0;
   width: 100%;
   overflow-x: hidden;
+  font-size: 1rem;
+  color: #fff;
 }

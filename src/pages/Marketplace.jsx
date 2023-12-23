@@ -1,7 +1,7 @@
 
 const Marketplace = () => {
   return (
-    <div className="flex justify-center items-center shadow-[0_3px_16px_rgba(47,83,109,0.12)] max-w-[87.5rem] mx-auto h-[70vh]">
+    <div className="flex items-center justify-center h-full min-h-[600px] text-2xl">
       coming soon
     </div>
   )

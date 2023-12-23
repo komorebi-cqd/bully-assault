@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form"
+import InputN from "@/components/inputs/InputN";
+import FullButton from "@/components/Buttons/FullButton"
+
 
 
 const Deploy = () => {
-
+    const [loading, setLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -16,30 +20,32 @@ const Deploy = () => {
     })
 
     const onSubmit = (data) => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500);
         console.log(data, errors)
     }
     return (
-        <>
-            <div className="flex justify-center w-[80%] mx-auto h-12 gap-x-5">
-                <div className="w-[200px] text-right leading-[3rem]">Tick:</div>
-                <div className="flex-shrink-0">
-                    <input  placeholder="4 characters" maxLength={4} className={`w-[300px] h-full px-4 transition bg-white border-2  rounded-lg outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors['tick'] ? 'border-rose-400' : 'border-[rgba(138,138,160,0.3)]'}`}  {...register("tick", { required: true })} />
-                </div>
+        <div className="flex flex-col gap-y-5">
+            <InputN id='tick' label='Tick' disabled={loading} register={register} errors={errors} required />
+            <InputN id='totalSupply' label='TotalSupply' disabled={loading} register={register} errors={errors} required />
+            <InputN id='perMint' label='PerMint' disabled={loading} register={register} errors={errors} required />
+            <div className="flex flex-col items-center justify-between mt-5 md:flex-row">
+                <div className="mb-4 md:mb-0">钱包地址余额：xxxx ETH</div>
+                <FullButton onClick={handleSubmit(onSubmit)} sx={{
+                    borderRadius: "25px",
+                    padding: "12px 40px",
+                    fontSize: "1rem",
+                    bgcolor: " rgba(12, 175, 96, 1)",
+                    "&:hover": {
+                        bgcolor: " rgba(12, 175, 96, 1)",
+                    }
+                }} variant="text" >
+                    <span className='text-white'>Deploy</span>
+                </FullButton>
             </div>
-            <div className="flex justify-center w-[80%] mx-auto h-12 gap-x-5">
-                <div className="w-[200px] text-right leading-[3rem]">Total Supply:</div>
-                <div className="flex-shrink-0">
-                    <input placeholder="please enter" className={`w-[300px] h-full px-4 transition bg-white border-2 rounded-lg outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors['totalSupply'] ? 'border-rose-400' : 'border-[rgba(138,138,160,0.3)]'}`} {...register("totalSupply", { required: true })} />
-                </div>
-            </div>
-            <div className="flex justify-center w-[80%] mx-auto h-12 gap-x-5">
-                <div className="w-[200px] text-right leading-[3rem]">Limit Per Mint:</div>
-                <div className="flex-shrink-0">
-                    <input placeholder="please enter" className={`w-[300px] h-full px-4 transition bg-white border-2 border-[rgba(138,138,160,0.3);] rounded-lg outline-none disabled:opacity-70 disabled:cursor-not-allowed ${errors['perMint'] ? 'border-rose-400' : 'border-[rgba(138,138,160,0.3)]'}`} {...register("perMint", { required: true })} />
-                </div>
-            </div>
-            <div className="w-[520px] h-12 flex justify-center items-center rounded-3xl mx-auto cursor-pointer bg-[rgba(81,66,252,.1)] text-primary text-base" onClick={handleSubmit(onSubmit)}>Deploy</div>
-        </>
+        </div>
     )
 }
 
