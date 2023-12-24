@@ -6,23 +6,23 @@ import Drawer from '@mui/material/Drawer';
 import { PiListBold } from "react-icons/pi";
 import NavLeft from "./NavLeft";
 import ConnectWalletDia from "./ConnectWalletDia";
-
+import Snackbar from '@mui/material/Snackbar';
 
 
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { setWalletOpen, account } = useMetaMask();
+  const { setWalletOpen, account, setMetamaskInfoDio, connectMetaMaskInfo, isShowMetamaskInfo } = useMetaMask();
 
   const toggleDrawer = (isOpen) => {
     setIsOpen(isOpen);
   };
 
   const walletClick = () => {
-    if(account){
+    if (account) {
       console.log("钱包已连接");
-    }else{
+    } else {
       setWalletOpen(true);
     }
   }
@@ -53,17 +53,26 @@ const Header = () => {
           <span className='pl-3 text-base text-white'>{!account ? "Wallet connect" : account.slice(0, 4) + "..." + account.slice(-4)}</span>
         </Button>
       </div>
-        <ConnectWalletDia />
+      <ConnectWalletDia />
       <Fragment>
         <Drawer
           anchor="left"
           open={isOpen}
           onClose={() => toggleDrawer(false)}
         >
-          <NavLeft isDrawer={true} setIsOpen={setIsOpen}/>
+          <NavLeft isDrawer={true} setIsOpen={setIsOpen} />
         </Drawer>
       </Fragment>
 
+
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={isShowMetamaskInfo}
+        autoHideDuration={5000}
+        onClose={() => setMetamaskInfoDio(false, "")}
+        message={connectMetaMaskInfo}
+        key="tip"
+      />
     </div>
   )
 }
