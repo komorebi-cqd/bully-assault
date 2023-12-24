@@ -5,6 +5,7 @@ import useMetaMask from '../../hooks/useMetaMask';
 import Drawer from '@mui/material/Drawer';
 import { PiListBold } from "react-icons/pi";
 import NavLeft from "./NavLeft";
+import ConnectWalletDia from "./ConnectWalletDia";
 
 
 
@@ -12,10 +13,18 @@ import NavLeft from "./NavLeft";
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const { connectMetaMask, account } = useMetaMask();
+  const { setWalletOpen, account } = useMetaMask();
 
   const toggleDrawer = (isOpen) => {
     setIsOpen(isOpen);
+  };
+
+  const walletClick = () => {
+    if(account){
+      console.log("钱包已连接");
+    }else{
+      setWalletOpen(true);
+    }
   }
 
   return (
@@ -31,7 +40,7 @@ const Header = () => {
         </Button>
       </div>
       <div>
-        <Button onClick={() => connectMetaMask()} sx={{
+        <Button onClick={() => walletClick()} sx={{
           borderRadius: "40px",
           padding: "12px 20px",
           bgcolor: "rgba(22,29,38,1)",
@@ -44,7 +53,7 @@ const Header = () => {
           <span className='pl-3 text-base text-white'>{!account ? "Wallet connect" : account.slice(0, 4) + "..." + account.slice(-4)}</span>
         </Button>
       </div>
-
+        <ConnectWalletDia />
       <Fragment>
         <Drawer
           anchor="left"
@@ -54,6 +63,7 @@ const Header = () => {
           <NavLeft isDrawer={true} setIsOpen={setIsOpen}/>
         </Drawer>
       </Fragment>
+
     </div>
   )
 }

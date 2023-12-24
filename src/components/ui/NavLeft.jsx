@@ -131,7 +131,7 @@ const NavLeft = ({ isDrawer = false, setIsOpen }) => {
 
 NavLeft.propTypes = {
     isDrawer: PropTypes.bool,
-    setIsOpen: PropTypes.func.isRequired
+    setIsOpen: PropTypes.func
 }
 
 export default NavLeft

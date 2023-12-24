@@ -26,7 +26,7 @@ const Lottery = () => {
     }
 
     return (
-        <div className="p-10">
+        <div className="p-4 sm:p-10 ">
             <div className="w-full min-h-[260px] rounded-3xl bg-slate-300"></div>
             <div className="flex flex-col gap-y-10">
                 <h3 className="pt-16 text-2xl font-bold text-center">当前奖池：xxx ETH</h3>

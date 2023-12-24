@@ -9,7 +9,7 @@ const list = [
 
 const ArbScr = () => {
     return (
-        <div className="p-10">
+        <div className="p-4 sm:p-10 ">
             <Grid container spacing={{ xs: 2, md: 3 }} >
                 {list.map(it => (
                     <Grid key={it.title} item xs={12} sm={12} md={4} lg={4}>
@@ -26,7 +26,7 @@ const ArbScr = () => {
                                             bgcolor: " rgba(12, 175, 96, 1)",
                                         }
                                     }} size="small" variant="text" >
-                                        <span className='text-white'>Transfer</span>
+                                        <span className='text-white normal-case'>Transfer</span>
                                     </Button>
                                     <Button sx={{
                                         borderRadius: "16px",
@@ -36,7 +36,7 @@ const ArbScr = () => {
                                             bgcolor: "  rgba(251, 119, 74, 1)",
                                         }
                                     }} size="small"   >
-                                        <span className='text-white'>List</span>
+                                        <span className='text-white normal-case'>List</span>
                                     </Button>
                                 </div>
                             </div>

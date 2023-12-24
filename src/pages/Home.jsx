@@ -67,7 +67,7 @@ const Home = () => {
 
 
   return (
-    <div className="max-w-[87.5rem] mx-auto p-10 box-border">
+    <div className="max-w-[87.5rem] mx-auto box-border p-4 sm:p-10 ">
       <Box>
         <StyledTabs
           value={currentTab}

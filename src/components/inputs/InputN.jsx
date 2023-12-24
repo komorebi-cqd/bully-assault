@@ -20,7 +20,7 @@ const Input= ({
     return (
         <div className='relative w-full'>
             {isShowLable && <div className='mb-4 font-bold'>{label}</div>}
-            <input id={id} {...register(id, { required })} disabled={disabled} placeholder={label} type={type} className={`w-full p-4 bg-mainBgC outline-none rounded-3xl border transition disabled:opacity-70 disabled:cursor-not-allowed ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] ? ' border-rose-500' : 'border-mainBgC'} ${errors[id] ? 'focus:border-rose-500' : 'focus:border-mainBgC'}`} />
+            <input id={id} {...register(id, { required })} disabled={disabled} placeholder={label} type={type} className={`w-full p-4 bg-mainBgC outline-none rounded-3xl border transition disabled:opacity-70 disabled:cursor-not-allowed ${formatPrice ? 'pl-9' : 'pl-4'} ${errors[id] ? ' border-rose-500' : ' border-[rgba(54,59,71,1)]'} ${errors[id] ? 'focus:border-rose-500' : 'focus:border-[rgba(54,59,71,1)]'}`} />
         </div>
     )
 };
