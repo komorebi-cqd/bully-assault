@@ -7,7 +7,7 @@ import { PiListBold } from "react-icons/pi";
 import NavLeft from "./NavLeft";
 import ConnectWalletDia from "./ConnectWalletDia";
 import Snackbar from "@mui/material/Snackbar";
-import Slide from '@mui/material/Slide';
+import Slide from "@mui/material/Slide";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -85,7 +85,7 @@ const Header = () => {
         key="tip"
         TransitionComponent={(props) => <Slide {...props} direction="down" />}
       >
-        <div className="border border-[rgba(54,59,71,1) px-4 bg-[rgba(50,50,50,1)] rounded py-2 text-sm text-white font-bold">
+        <div className=" px-6 bg-[rgb(50,50,50)] rounded-3xl py-2 text-sm text-white shadow-[0_3px_5px_-1px_rgba(0,0,0,0.2),0_6px_10px_0px_rgba(0,0,0,0.14),0_1px_18px_0px_rgba(0,0,0,0.12)]">
           {connectMetaMaskInfo}
         </div>
       </Snackbar>
