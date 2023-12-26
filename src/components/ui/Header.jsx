@@ -85,7 +85,7 @@ const Header = () => {
         key="tip"
         TransitionComponent={(props) => <Slide {...props} direction="down" />}
       >
-        <div className=" px-4 bg-[rgba(50,50,50,1)] rounded py-2 text-sm">
+        <div className="border border-[rgba(54,59,71,1) px-4 bg-[rgba(50,50,50,1)] rounded py-2 text-sm text-white font-bold">
           {connectMetaMaskInfo}
         </div>
       </Snackbar>
