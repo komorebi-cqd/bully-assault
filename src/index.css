@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 :root {
-    --nav-height: 100px;
+    --nav-height: 64px;
 }
 
 body {

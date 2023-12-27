@@ -3,10 +3,9 @@ import { Web3 } from "web3";
 const useMetaMask = create((set, get) => ({
   connectMetaMaskInfo: "", //小狐狸提示信息
   isShowMetamaskInfo: false, //是否显示小狐狸错误信息
-  walletOpen: false,
+  walletOpen: false, //小狐狸连接弹窗控制
   account: "", //钱包地址
   chainId: "", //链ID
-  ethereum: window.ethereum,
   web3: null,
   isConnecting: false, //是否正在连接中
   connectMetaMask: async () => {
@@ -47,8 +46,8 @@ const useMetaMask = create((set, get) => ({
     }
   },
   subscribeChain() {
-    const ethereum = get().ethereum;
-    if (ethereum) {
+    if (typeof window !== "undefined" && window.ethereum) {
+      const ethereum = window.ethereum;
       const web3 = new Web3(ethereum);
       set({ web3 });
       ethereum.on("connect", () => {
@@ -80,11 +79,14 @@ const useMetaMask = create((set, get) => ({
         // 清空钱包连接类型
         // commit("accountChange", '')
         // set({ account: "", chainId: "" });
-
-        const setMetamaskInfoDio = get().setMetamaskInfoDio;
-        setMetamaskInfoDio(true, "钱包已断开");
       });
     }
+  },
+  disconnect: () => {
+    set({
+      account: "",
+      chainId: "",
+    });
   },
   setWalletOpen: (isOpen) => {
     set({ walletOpen: isOpen, isConnecting: false });

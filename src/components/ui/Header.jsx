@@ -8,28 +8,40 @@ import NavLeft from "./NavLeft";
 import ConnectWalletDia from "./ConnectWalletDia";
 import Snackbar from "@mui/material/Snackbar";
 import Slide from "@mui/material/Slide";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Divider from "@mui/material/Divider";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [accountMenuEl, setAccountMenuEl] = useState(null);
+  const menuOpen = Boolean(accountMenuEl);
   const {
     setWalletOpen,
     account,
     setMetamaskInfoDio,
     connectMetaMaskInfo,
     isShowMetamaskInfo,
+    disconnect,
   } = useMetaMask();
 
   const toggleDrawer = (isOpen) => {
     setIsOpen(isOpen);
   };
 
-  const walletClick = () => {
+  const walletClick = (event) => {
     if (account) {
-      console.log("钱包已连接");
+      setAccountMenuEl(event.currentTarget);
     } else {
       setWalletOpen(true);
     }
+  };
+
+  const handleCloseAccountMenu = (type) => {
+    if (type === "logout") {
+      disconnect();
+    }
+    setAccountMenuEl(null);
   };
 
   return (
@@ -50,25 +62,69 @@ const Header = () => {
       </div>
       <div>
         <Button
-          onClick={() => walletClick()}
+          onClick={walletClick}
+          aria-controls={menuOpen ? "account-menu" : undefined}
+          aria-expanded={menuOpen ? "true" : undefined}
+          aria-haspopup="true"
           sx={{
             borderRadius: "40px",
-            padding: "12px 20px",
+            padding: "4px 12px",
             bgcolor: "rgba(22,29,38,1)",
-            border: "2px solid rgba(128,129,149,0.3)",
+            border: "1px solid rgba(128,129,149,0.3)",
             "&:hover": {
               bgcolor: "rgba(255,255,255,0.08)",
             },
           }}
           variant="text"
         >
-          <BiSolidWallet className="text-white" />
+          <BiSolidWallet className="text-white text-lg" />
           <span className="pl-3 text-base text-white">
             {!account
               ? "Wallet connect"
               : account.slice(0, 4) + "..." + account.slice(-4)}
           </span>
         </Button>
+        <Menu
+          elevation={0}
+          anchorEl={accountMenuEl}
+          id="account-menu"
+          open={menuOpen}
+          onClose={handleCloseAccountMenu}
+          onClick={handleCloseAccountMenu}
+          transformOrigin={{ horizontal: "right", vertical: "top" }}
+          anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+          slotProps={{
+            paper: {
+              sx: {
+                mt: 1.5,
+                minWidth: "320px",
+                bgcolor: "rgba(22,29,38,1)",
+                border: "1px solid rgba(255, 255, 255, 0.12)",
+                borderRadius: "8px",
+                "& .MuiList-root": {
+                  padding: "0px",
+                },
+              },
+            },
+          }}
+        >
+          <div className=" text-white font-bold p-4">账户</div>
+          <Divider sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }} />
+          <MenuItem onClick={handleCloseAccountMenu}>
+            <div className=" py-2">
+              <span className=" text-white">
+                {account.slice(0, 4) + "..." + account.slice(-4)}
+              </span>
+            </div>
+          </MenuItem>
+          <Divider
+            className="!m-0"
+            sx={{ bgcolor: "rgba(255, 255, 255, 0.12)" }}
+          />
+          <MenuItem onClick={() => handleCloseAccountMenu("logout")}>
+            <span className=" text-red-400 text-sm">退出登录</span>
+          </MenuItem>
+        </Menu>
       </div>
       <ConnectWalletDia />
       <Fragment>
