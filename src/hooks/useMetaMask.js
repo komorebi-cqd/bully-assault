@@ -11,26 +11,21 @@ const useMetaMask = create((set, get) => ({
   connectMetaMask: async () => {
     if (typeof window !== "undefined" && window.ethereum) {
       const web3 = get().web3;
-      const ethereum = window.ethereum;
       set({ isConnecting: true });
       try {
-        const accounts = await ethereum.request({
-          method: "eth_requestAccounts",
-        }); //请求地址
-
-        const chainId = await ethereum.request({
-          method: "eth_chainId",
-        }); // 请求链
-        console.log(chainId, "eth_chainId", accounts[0], web3);
-        // const res =await web3.eth.getBalance(accounts[0]);
-        // console.log(res, " 代币余额");
+        window.ethereum.enable();
+        web3.eth.getAccounts().then(function (accounts) {
+          set({ account: accounts[0] });
+          console.log(accounts);
+        });
+        web3.eth.getChainId().then(function (chainId) {
+          console.log(chainId, "chainId-------");
+          set({ chainId: chainId });
+        });
         set({
-          account: accounts[0],
-          chainId,
           walletOpen: false,
           isConnecting: false,
         });
-        console.log(web3, accounts, chainId);
       } catch (error) {
         console.log(error, "----------错误");
         const setMetamaskInfoDio = get().setMetamaskInfoDio;
@@ -47,14 +42,14 @@ const useMetaMask = create((set, get) => ({
   },
   subscribeChain() {
     if (typeof window !== "undefined" && window.ethereum) {
-      const ethereum = window.ethereum;
-      const web3 = new Web3(ethereum);
+      //   const ethereum = window.ethereum;
+      const web3 = new Web3(window.web3.currentProvider);
       set({ web3 });
-      ethereum.on("connect", () => {
+      web3.provider.on("connect", () => {
         const connectMetaMask = get().connectMetaMask;
         connectMetaMask();
       });
-      ethereum.on("accountsChanged", async (accounts) => {
+      web3.provider.on("accountsChanged", async (accounts) => {
         console.log("change account", accounts);
         if (!accounts[0]) {
           set({ account: "" });
@@ -67,14 +62,11 @@ const useMetaMask = create((set, get) => ({
         set({ account: accounts[0] }); //地址改变更新
         // dispatch("getClaimNumber")
       });
-      ethereum.on("chainIdChanged", (chainID) => {
-        console.log("chainIdChanged-" + chainID);
-      });
-      ethereum.on("chainChanged", (event) => {
+      web3.provider.on("chainChanged", (event) => {
         console.log("chainChanged", event);
         // dispatch("getClaimNumber")
       });
-      ethereum.on("disconnect", (e) => {
+      web3.provider.on("disconnect", (e) => {
         console.log("------disconnect", e);
         // 清空钱包连接类型
         // commit("accountChange", '')
